@@ -1,0 +1,99 @@
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+label {
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 10px;
+}
+
+.address {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.create-employee{
+    margin-bottom: 16px;
+    width: 291.594px;
+}
+
+.create-employee input{
+    width: 177px;
+}
+
+.create-employee select{
+    width: 258px;
+}
+
+.state, .department{
+    background: #f6f6f6;
+    border: 1px solid #858585 ;
+    border-radius: 1px;
+    font-size: 1em;
+    padding: 5px 5px 5px 5px;
+}
+
+.state option, .department option{
+    background: white;
+}
+
+.search_employee-table{
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+.select_employee-table{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.divHeader,.divFooter{
+    width: 886.219px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.divHeader{
+    margin-bottom: 8px;
+}
+
+.divFooter{
+    margin-top: 10px;
+}
+
+table{
+    width: 886.219px;
+    height: 73px;
+}
+
+.sorting{
+    padding-bottom: 8px;
+}
+
+.dataTables_empty{
+    background-color: #f6f6f6;
+    border-top: black 1px solid;
+    border-bottom: black 1px solid;
+    text-align: center;
+    padding: 8px 0px 8px 0px;
+}
+
+.next{
+    margin-left: 35px;
+    margin-right: 18px;
+}
+
+.next, .previous{
+    color: #666;
+}
