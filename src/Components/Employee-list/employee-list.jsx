@@ -12,7 +12,6 @@ function EmployeeList() {
     const employees = JSON.parse(localStorage.getItem("employees") || "[]");
     setEmployeesList(Array.isArray(employees) ? employees : []);
   }, []);
-  //const dataTable = document.getElementById('employee-table');
 
   const filterEmployees = employeesList.filter((emp) =>
     Object.values(emp).join(" ").toLowerCase().includes((search || "").toLowerCase())
@@ -48,31 +47,31 @@ function EmployeeList() {
           <table id="employee-table" className="display dataTable no-footer" role='grid' aria-describedby='employee-table_info'>
             <thead>
               <tr role='row'>
-                <th className='sorting' tabIndex="0" aria-controls='employee-table' rowSpan={"1"} colSpan={"1"} style={{width:"76.8594px"}}>First Name</th>
-                <th className='sorting' tabIndex="0" aria-controls='employee-table' rowSpan={"1"} colSpan={"1"} style={{width:"74.2188px"}}>Last Name</th>
-                <th className='sorting' tabIndex="0" aria-controls='employee-table' rowSpan={"1"} colSpan={"1"} style={{width:"70.6406px"}}>Start Date</th>
-                <th className='sorting' tabIndex="0" aria-controls='employee-table' rowSpan={"1"} colSpan={"1"} style={{width:"82.6406px"}}>Department</th>
-                <th className='sorting' tabIndex="0" aria-controls='employee-table' rowSpan={"1"} colSpan={"1"} style={{width:"89.7656px"}}>Date of Birth</th>
-                <th className='sorting' tabIndex="0" aria-controls='employee-table' rowSpan={"1"} colSpan={"1"} style={{width:"40.5781px"}}>Street</th>
-                <th className='sorting' tabIndex="0" aria-controls='employee-table' rowSpan={"1"} colSpan={"1"} style={{width:"29.3281px"}}>City</th>
-                <th className='sorting' tabIndex="0" aria-controls='employee-table' rowSpan={"1"} colSpan={"1"} style={{width:"34.6562px"}}>State</th>
-                <th className='sorting' tabIndex="0" aria-controls='employee-table' rowSpan={"1"} colSpan={"1"} style={{width:"63.5781px"}}>Zip Code</th>
+                <th className='sorting' tabIndex="0" aria-controls='employee-table' rowSpan={"1"} colSpan={"1"} style={{width:"77px"}}>First Name</th>
+                <th className='sorting' tabIndex="0" aria-controls='employee-table' rowSpan={"1"} colSpan={"1"} style={{width:"74px"}}>Last Name</th>
+                <th className='sorting' tabIndex="0" aria-controls='employee-table' rowSpan={"1"} colSpan={"1"} style={{width:"71px"}}>Start Date</th>
+                <th className='sorting' tabIndex="0" aria-controls='employee-table' rowSpan={"1"} colSpan={"1"} style={{width:"83px"}}>Department</th>
+                <th className='sorting' tabIndex="0" aria-controls='employee-table' rowSpan={"1"} colSpan={"1"} style={{width:"90px"}}>Date of Birth</th>
+                <th className='sorting' tabIndex="0" aria-controls='employee-table' rowSpan={"1"} colSpan={"1"} style={{width:"41px"}}>Street</th>
+                <th className='sorting' tabIndex="0" aria-controls='employee-table' rowSpan={"1"} colSpan={"1"} style={{width:"29px"}}>City</th>
+                <th className='sorting' tabIndex="0" aria-controls='employee-table' rowSpan={"1"} colSpan={"1"} style={{width:"35px"}}>State</th>
+                <th className='sorting' tabIndex="0" aria-controls='employee-table' rowSpan={"1"} colSpan={"1"} style={{width:"64px"}}>Zip Code</th>
               </tr>
             </thead>
-            <tbody>
-              {filterEmployees.length > 0 ?
+            <tbody className='index'>
+              {filterEmployees.length >= 0 ?
                 (
                   filterEmployees.map((emp, index) => (
-                    <tr key={index}>
-                      <td>{emp.firstName}</td>
-                      <td>{emp.lastName}</td>
-                      <td>{emp.startDate}</td>
-                      <td>{emp.department}</td>
-                      <td>{emp.dateOfBirth}</td>
-                      <td>{emp.street}</td>
-                      <td>{emp.city}</td>
-                      <td>{emp.state}</td>
-                      <td>{emp.zipCode}</td>
+                    <tr key={index} >
+                      <td colSpan={"1"}>{emp.firstName}</td>
+                      <td colSpan={"1"}>{emp.lastName}</td>
+                      <td colSpan={"1"}>{emp.startDate}</td>
+                      <td colSpan={"1"}>{emp.department}</td>
+                      <td colSpan={"1"}>{emp.dateOfBirth}</td>
+                      <td colSpan={"1"}>{emp.street}</td>
+                      <td colSpan={"1"}>{emp.city}</td>
+                      <td colSpan={"1"}>{emp.state}</td>
+                      <td colSpan={"1"}>{emp.zipCode}</td>
                     </tr>
                   ))
                 ):(
@@ -87,6 +86,7 @@ function EmployeeList() {
             <div id='employee-table_info' className='dataTables_info'>Showing 0 to 0 of 0 entries</div>
             <div id='employee-table_paginate' className='dataTables_paginate paging_simple_numbers'>
               <a className="paginate-button previous disabled" aria-controls='employee-table' id='employee-table_previous'>Previous</a>
+              <span><a className='paginate-button current' aria-controls='employee-table'></a></span>
               <a className='paginate-button next disabled' aria-controls='employee-table' id='employee-table_next'>Next</a>
             </div>
           </div>

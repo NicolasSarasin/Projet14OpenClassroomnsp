@@ -81,7 +81,7 @@ table{
     padding-bottom: 8px;
 }
 
-.dataTables_empty{
+.dataTables_empty, .index{
     background-color: #f6f6f6;
     border-top: black 1px solid;
     border-bottom: black 1px solid;

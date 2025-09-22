@@ -9,8 +9,8 @@ function PluginDate({ label, selectedDate, onChange }) {
                 className="start-date date-of-birth" 
                 calendarClassName="start-date_calendar date-of-birth_calendar"
                 selected={selectedDate}
-                dateFormat="MM-dd-yyyy"  
-                placeholder="MM-DD-YYYY" 
+                dateFormat="MM/dd/yyyy"  
+                placeholder="MM/DD/YYYY" 
                 onChange={onChange}
             />
         </div>

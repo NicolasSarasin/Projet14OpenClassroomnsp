@@ -1,6 +1,7 @@
-import { useRef, useEffect, useState} from 'react'
+import { useEffect, useRef, useState} from 'react'
 import { Link } from "react-router-dom";
-import PluginDate from './Components/PluginComponent/Plugin_date';
+import PluginDate from './Components/PluginComponent/Plugin_date'; 
+import { format } from "date-fns";
 
 const states = [
   { name: "Alabama", abbreviation: "AL" },
@@ -56,48 +57,41 @@ const states = [
 ];
 
 function App() {
-  const [form, setForm] = useState({
-    firstName:'',
-    lastName:'',
-    startDate:'',
-    department:'',
-    dateOfBirth:'',
-    street:'',
-    city:'',
-    state:'',
-    zipCode:''
-  })
+  
 
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [dateOfBirth, setDateOfBirth] = useState(null);
-  const[confirmation, setConfirmation] = useState (false)
+  const [department, setDepartment] = useState("");
+  const [street, setStreet] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [zipCode, setZipCode] = useState("");
 
   useEffect(() => {
     document.title = "HRnet"; // Changer le titre ici
   }, []);
 
-  function handleChange(e) {
-    const { id , value } = e.target ;
-    setForm((prev) => ({
-      ...prev,
-      [id]: value,
-    }));
-  }
-
-  const modal = useRef<HTMLDialogElement | null>(null)
-
-  useEffect(() => {
-    if (modal.current) {
-      modal.current.focus(); // Exemple : focus auto
-    }
-  }, []);
+  const modal = useRef(null);
 
   function saveEmployee(){
+    const employee = {
+      firstName,
+      lastName,
+      dateOfBirth: dateOfBirth ? format(dateOfBirth, "MM/dd/yyyy") : "",
+      startDate: startDate ? format(startDate, "MM/dd/yyyy") : "",
+      department,
+      street,
+      city,
+      state,
+      zipCode,
+    }
     const employees = JSON.parse(localStorage.getItem('employees')) || [];
-    employees.push(form)
+    employees.push(employee);
     localStorage.setItem('employees', JSON.stringify(employees))
-    setConfirmation(true);
-    if (modal.current) modal.current.showModal();
+    if(modal.current) modal.current.showModal();
+    return;
   }
 
   function closeModal(){
@@ -114,10 +108,10 @@ function App() {
         <h2>Create Employee</h2>
         <form onSubmit={(e) => e.preventDefault()} id="create-employee" className='create-employee'>
           <label htmlFor="first-name">First Name</label>
-          <input type="text" id="first-name" value={form.firstName} onChange={handleChange}/>
+          <input type="text" id="first-name" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
 
           <label htmlFor="last-name">Last Name</label>
-          <input type="text" id="last-name" value={form.lastName} onChange={handleChange}/>
+          <input type="text" id="last-name" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
 
           <PluginDate label="Date of Birth" selectedDate={dateOfBirth} onChange={setDateOfBirth}/>
 
@@ -127,13 +121,13 @@ function App() {
             <legend>Address</legend>
 
             <label htmlFor="street">Street</label>
-            <input id="street" type="text" value={form.street} onChange={handleChange}/>
+            <input id="street" type="text" value={street} onChange={(e) => setStreet(e.target.value)}/>
 
             <label htmlFor="city">City</label>
-            <input id="city" type="text" value={form.city} onChange={handleChange}/>
+            <input id="city" type="text" value={city} onChange={(e) => setCity(e.target.value)}/>
 
             <label htmlFor="state">State</label>
-            <select name="state" id="state" className='state' value={form.state} onChange={handleChange}>
+            <select name="state" id="state" className='state'value={state} onChange={(e) => setState(e.target.value)}>
               {states.map((s) => (
                 <option key={s.abbreviation} value={s.abbreviation}>
                   {s.name}
@@ -142,11 +136,11 @@ function App() {
             </select>
 
             <label htmlFor="zip-code">Zip Code</label>
-            <input id="zip-code" type="number" value={form.zipCode} onChange={handleChange}/>
+            <input id="zip-code" type="number" value={zipCode} onChange={(e) => setZipCode(e.target.value)}/>
           </fieldset>
 
           <label htmlFor="department">Department</label>
-          <select name="department" id="department" className='department' value={form.department} onChange={handleChange}>
+          <select name="department" id="department" className='department' value={department} onChange={(e) => setDepartment(e.target.value)}>
               <option>Sales</option>
               <option>Marketing</option>
               <option>Engineering</option>
@@ -157,7 +151,7 @@ function App() {
 
         <button type="button" onClick={saveEmployee} className='saveButton' id='saveButton'>Save</button>
       </div>
-      {confirmation && <dialog className="modal" id='modal' ref={modal}>Employee Created!<button onClick={closeModal} id='closeButton'>Close</button></dialog>}
+      <dialog className="modal" id='modal' ref={modal}>Employee Created!<button onClick={closeModal} id='closeButton'>Close</button></dialog>
     </div>
   )
 }
