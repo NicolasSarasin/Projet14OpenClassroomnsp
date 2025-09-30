@@ -1,9 +1,10 @@
+@import url('datatables.net-dt');
+
 .title {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
 
 .container {
     display: flex;
@@ -59,7 +60,7 @@ label {
 }
 
 .divHeader,.divFooter{
-    width: 886.219px;
+    width: 1173px;
     display: flex;
     justify-content: space-between;
 }
@@ -69,31 +70,76 @@ label {
 }
 
 .divFooter{
-    margin-top: 10px;
+    border-top: black 1px solid;
+    padding-top: 13px;
 }
 
 table{
-    width: 886.219px;
+    width: 1173px;
     height: 73px;
 }
 
-.sorting{
-    padding-bottom: 8px;
-}
-
-.dataTables_empty, .index{
+.dataTables_empty{
     background-color: #f6f6f6;
     border-top: black 1px solid;
-    border-bottom: black 1px solid;
     text-align: center;
     padding: 8px 0px 8px 0px;
 }
 
-.next{
-    margin-left: 35px;
-    margin-right: 18px;
+.index{
+    margin: 0px ;
+    background-color: #f6f6f6;
+    text-align: left;
+    padding: 8px 10px;
+}
+
+.firstName{
+    background-color: #f1f1f1;
+}
+
+.even .index{
+    background-color: white;
+}
+.even .firstName{
+    background-color: #f6f6f6;
+}
+
+.display {
+    border-collapse: collapse;
+}
+
+.displayThead .sorting{
+    padding: 10px 0px 10px 0px;
+    border-bottom: black 1px solid;
+    text-align: center;
+}
+
+.indexOdd{
+    border-top: 1px solid #ddd;
+}
+
+.current{
+    border: 1px solid #979797;
+    color: #333;
+    background: linear-gradient(to bottom, #fff 0%, #dcdcdc 100%);
+    text-decoration: none;
+    padding:8px 16px 8px 16px;
+    margin-left: 2px;
+}
+
+.notCurrent{
+    padding:8px 16px 8px 16px;
+    margin-left: 2px;
 }
 
 .next, .previous{
     color: #666;
+    padding:8px 16px 8px 16px;
+    margin-left: 2px;
+}
+
+.next:hover, .previous:hover, .notCurrent:hover{
+  cursor: pointer;
+  background-color: #333;
+  color: white;
 }
