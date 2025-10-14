@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState} from 'react'
 import { Link } from "react-router-dom";
-import PluginDate from './Components/PluginComponent/Plugin_date'; 
+import PluginDate from './Components/PluginComponent/src/Plugin_date'; 
 import { format } from "date-fns";
 
 const states = [
