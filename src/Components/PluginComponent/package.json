@@ -1,6 +1,6 @@
 {
   "name": "@nicolassarasin-pontico/plugin-date",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Un composant React de sélection de date simple et réutilisable",
   "main": "dist/plugin-date.umd.cjs",
   "module": "dist/plugin-date.js",

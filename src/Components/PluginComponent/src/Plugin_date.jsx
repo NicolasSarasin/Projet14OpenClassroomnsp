@@ -1,33 +1,143 @@
-import "react-datepicker/dist/react-datepicker.css";
-import "../../../css/pluginDate.css"
-import { useState } from 'react';
+import "./pluginDate.css";
+import { useEffect, useRef, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+
 function PluginDate({ label, selectedDate, onChange }) {
-    const [date, setDate] = useState("");
-    const formatDate = (isoDate) => {
-        if (!isoDate) return "";
-        const [year, month, day] = isoDate.split("-");
-        return `${month}/${day}/${year}`;
+  const [date, setDate] = useState("");
+  const [openCalendar, setOpenCalendar] = useState(false);
+  const [navMonth, setNavMonth] = useState(0); // Décalage de mois
+  const [navYear, setNavYear] = useState(0); // Décalage d’année
+  const inputRef = useRef(null);
+  const pickerRef = useRef(null);
+
+  // Fermer le calendrier quand on clique ailleurs
+  useEffect(() => {
+    const handleClickOutsideCalendar = (event) => {
+      if (
+        pickerRef.current &&
+        !pickerRef.current.contains(event.target) &&
+        !inputRef.current.contains(event.target)
+      ) {
+        setOpenCalendar(false);
+      }
     };
-    const handleChange = (e) => {
-        const isoDate = e.target.value; // format YYYY-MM-DD
-        setDate(isoDate);
-        if (onChange) onChange(isoDate);
-    };
-    return (
-        <div>
-            <label htmlFor="start-date date-of-birth">{label}</label>
-            <input type="date"
-                pattern="^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}$"
-                id="start-date date-of-birth" 
-                className="start-date date-of-birth"
-                selected={selectedDate}
-                value={date}  
-                placeholder="MM/DD/YYYY" 
-                onChange={handleChange}
-            />
-            {formatDate(date)}
+    document.addEventListener("mousedown", handleClickOutsideCalendar);
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutsideCalendar);
+  }, []);
+
+  const handlePrevMonth = () => {
+    if (navMonth === 0){
+      setNavMonth(11);
+      setNavYear(navYear - 1);
+    }
+    else {
+      setNavMonth(navMonth - 1);
+    }
+  };
+  const handleNextMonth = () => {
+    if (navMonth === 11){
+      setNavMonth(0);
+      setNavYear(navYear + 1);
+    }
+    else {
+      setNavMonth(navMonth + 1);
+    }
+  }
+
+  const displayedDate = new Date(navYear, navMonth, 1);
+  const month = displayedDate.toLocaleString("default", { month: "long" });
+  const theFirstDay = new Date(navYear, navMonth, 1).getDay();
+  const daysInTheMonth = new Date(navYear, navMonth + 1, 0).getDate();
+
+  // === Sélection d’une date ===
+  const handleChange = (day) => {
+    const formattedDate = `${String(navMonth + 1).padStart(2, "0")}/${String(
+      day
+    ).padStart(2, "0")}/${navYear}`;
+    setDate(formattedDate);
+    setOpenCalendar(false);
+    if (onChange) onChange(formattedDate);
+  };
+
+  return (
+    <div className="plugin-date-component">
+      <label htmlFor="custom-date">{label}</label>
+      <input
+        id="custom-date"
+        ref={inputRef}
+        className="start-date date-of-birth"
+        selected={selectedDate}
+        value={date}
+        placeholder="MM/DD/YYYY"
+        readOnly
+        onClick={() => setOpenCalendar(!openCalendar)}
+      />
+
+      {openCalendar && (
+        <div className="datepicker active" id="datepicker" ref={pickerRef}>
+          <table className="tableDate">
+            <thead className="MonthAndDays">
+              <tr className="Month">
+                <th colSpan="7">
+                  <FontAwesomeIcon
+                    icon={faAngleLeft}
+                    className="iconNavMonth"
+                    onClick={handlePrevMonth}
+                  />
+                  <span className="currentMonthYear">
+                    {month.charAt(0).toUpperCase() + month.slice(1)}
+                  </span>
+                  <select name="Year" id="Year" className="selectedYear" value={navYear} onChange={(e) => setNavYear(Number(e.target.value))}>
+                    {Array.from({ length: 101 }, (_, i) => 1950 + i).map((year) => (
+                      <option key={year} value={year}>
+                        {year}
+                      </option>
+                    ))}
+                  </select>
+                  <FontAwesomeIcon
+                    icon={faAngleRight}
+                    className="iconNavMonth"
+                    onClick={handleNextMonth}
+                  />
+                </th>
+              </tr>
+              <tr className="Days">
+                <th>Su</th>
+                <th>Mo</th>
+                <th>Tu</th>
+                <th>We</th>
+                <th>Th</th>
+                <th>Fr</th>
+                <th>Sa</th>
+              </tr>
+            </thead>
+            <tbody className="Dates">
+              {Array.from({ length: Math.ceil((daysInTheMonth + theFirstDay) / 7) }).map((_, weekIndex) => (
+                <tr key={weekIndex}>
+                  {Array(7)
+                    .fill(0)
+                    .map((_, dayIndex) => {
+                      const day = weekIndex * 7 + dayIndex - theFirstDay + 1;
+                      return (
+                        <td
+                          key={dayIndex}
+                          className={day > 0 && day <= daysInTheMonth ? "SelectedDay" : ""}
+                          onClick={() => day > 0 && day <= daysInTheMonth && handleChange(day)}
+                        >
+                          {day > 0 && day <= daysInTheMonth ? day : ""}
+                        </td>
+                      );
+                    })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-    )
+      )}
+    </div>
+  );
 }
 
-export default PluginDate
+export default PluginDate;

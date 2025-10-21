@@ -1,0 +1,68 @@
+.plugin-date-component {
+  font-family: Arial, sans-serif;
+  display: inline-block;
+}
+
+.plugin-date-component .start-date{
+  cursor: pointer;
+}
+
+.start-date[type="date"]{
+  position: relative;
+}
+
+.start-date[type="date"]:hover::after{
+  content: "📅";
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.datepicker{
+  position: fixed;
+  top: 60px;
+  left: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  z-index: 100;
+  padding: 10px;
+}
+
+.datepicker .MonthAndDays{
+  border-collapse: collapse;
+  width: 100%;
+  text-align: center;
+}
+
+.datepicker .Days{
+  background-color: #f3f3f3;
+}
+
+.datepicker .SelectedDay {
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.datepicker .SelectedDay:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.iconNavMonth{
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.currentMonthYear{
+  cursor: pointer;
+}
+
+.datepicker .selectedYear{
+  margin-left: 10px;
+  width: 130px;
+  font-size: 14px;
+}
