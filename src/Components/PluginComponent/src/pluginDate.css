@@ -1,6 +1,7 @@
 .plugin-date-component {
   font-family: Arial, sans-serif;
   display: inline-block;
+  position: relative;
 }
 
 .plugin-date-component .start-date{
@@ -20,19 +21,36 @@
 }
 
 .datepicker{
-  position: fixed;
-  top: 60px;
-  left: 0;
+  animation-duration: 1s;
+  animation-name: slidein;
+  position: relative;
+  margin-top: 10px;
   background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 8px 8px 8px rgba(0,0,0,0.1),
+  -8px -8px 8px rgba(0,0,0,0.1);
   z-index: 100;
   padding: 10px;
 }
 
-.datepicker .MonthAndDays{
+@keyframes slidein {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+.datepicker .tableDate{
   border-collapse: collapse;
+  width: 100%;
+}
+
+.datepicker .MonthAndDays{
   width: 100%;
   text-align: center;
 }
@@ -50,6 +68,17 @@
 .datepicker .SelectedDay:hover {
   background-color: #007bff;
   color: white;
+}
+
+.datepicker .SelectedDay.selected {
+  background-color: #f3f3f3;
+  color: white;
+}
+
+.datepicker .theSelectedDay {
+  background-color: #00346c;
+  color: white;
+  border-radius: 4px;
 }
 
 .iconNavMonth{

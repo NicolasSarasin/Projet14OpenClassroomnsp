@@ -85,6 +85,8 @@ function PluginDate({ label, selectedDate, onChange }) {
                     icon={faAngleLeft}
                     className="iconNavMonth"
                     onClick={handlePrevMonth}
+                    role="button"
+                    aria-label="Previous month"
                   />
                   <span className="currentMonthYear">
                     {month.charAt(0).toUpperCase() + month.slice(1)}
@@ -100,6 +102,8 @@ function PluginDate({ label, selectedDate, onChange }) {
                     icon={faAngleRight}
                     className="iconNavMonth"
                     onClick={handleNextMonth}
+                    role="button"
+                    aria-label="Next month"
                   />
                 </th>
               </tr>
@@ -120,13 +124,18 @@ function PluginDate({ label, selectedDate, onChange }) {
                     .fill(0)
                     .map((_, dayIndex) => {
                       const day = weekIndex * 7 + dayIndex - theFirstDay + 1;
+                      const isValidDay = day > 0 && day <= daysInTheMonth;
+                      const formattedDate = isValidDay
+                        ? `${String(navMonth + 1).padStart(2, "0")}/${String(day).padStart(2, "0")}/${navYear}`
+                        : "";
+                      const isSelectedDay = formattedDate === date;
                       return (
                         <td
                           key={dayIndex}
-                          className={day > 0 && day <= daysInTheMonth ? "SelectedDay" : ""}
-                          onClick={() => day > 0 && day <= daysInTheMonth && handleChange(day)}
+                          className={day > 0 && day <= daysInTheMonth ? `SelectedDay  ${isSelectedDay ? "theSelectedDay" : ""}` : "SelectedDay selected"}
+                          onClick={() => isValidDay && handleChange(day) }
                         >
-                          {day > 0 && day <= daysInTheMonth ? day : ""}
+                          {isValidDay ? day : "" ? day : ""}
                         </td>
                       );
                     })}
